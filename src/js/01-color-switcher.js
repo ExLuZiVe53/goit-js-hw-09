@@ -1,12 +1,17 @@
+// Імпортуємо головну функцію getRandomHexColor
 import { getRandomHexColor } from '../helpers/getRandomHexColor';
 
+// Оголошуємо зміні та знаходимо іх кліки по вікну, та кнопкам
 const body = document.querySelector('body');
 const startBtn = document.querySelector('body button[data-start]');
 const stopBtn = document.querySelector('body button[data-stop]');
 
+// Встановлюємо прослуховувач подій на кнопку start, по події клік та передаємо колбек функцію
 startBtn.addEventListener('click', onClick);
+// Оголошуємо зміну colorChange та присвоюємо їй пустоту(null)
 let colorChange = null;
 
+// Створюємо функцію onClick та запускаємо таймер з інтервалом на 1сек
 function onClick() {
   startBtn.setAttribute('disabled', 'true');
 
@@ -16,26 +21,12 @@ function onClick() {
   }, 1000);
 }
 
-stopBtn.addEventListener('click', onStopClick);
+//Вішаємо прослуховувач подій на кнопку onClick
+с.addEventListener('click', onStopClick);
 
+// Зупиняємо створюємо функцію onStopClick, в якій зупиняємо наш інтервал, та робимо кнопку старт не активною
 function onStopClick() {
   clearInterval(colorChange);
   startBtn.removeAttribute('disabled', 'true');
   startBtn.setAttribute('active', 'true');
 }
-// startBtn.addEventListener('click', () => {
-//   timerId = setInterval(() => {
-//     const randomColor = getRandomHexColor();
-//     document.body.style.backgroundColor = randomColor;
-//     document.body.style.btn = disabled;
-//     function getRandomHexColor() {
-//       return `#${Math.floor(Math.random() * 16777215)
-//         .toString(16)
-//         .padStart(6, 0)}`;
-//     }
-//   }, 1000);
-// });
-
-// stopBtn.addEventListener('click', () => {
-//   clearInterval(timerId);
-// });
