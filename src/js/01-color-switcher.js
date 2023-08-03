@@ -22,9 +22,9 @@ function onClick() {
 }
 
 //Вішаємо прослуховувач подій на кнопку onClick
-с.addEventListener('click', onStopClick);
+stopBtn.addEventListener('click', onStopClick);
 
-// Зупиняємо створюємо функцію onStopClick, в якій зупиняємо наш інтервал, та робимо кнопку старт не активною
+// Зупиняємо створюємо функцію onStopClick, в якій зупиняємо наш інтервал, та робимо кнопку старт не активно
 function onStopClick() {
   clearInterval(colorChange);
   startBtn.removeAttribute('disabled', 'true');
