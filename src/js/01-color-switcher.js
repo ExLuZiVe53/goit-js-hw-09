@@ -3,6 +3,7 @@ import { getRandomHexColor } from '../helpers/getRandomHexColor';
 const body = document.querySelector('body');
 const startBtn = document.querySelector('body button[data-start]');
 const stopBtn = document.querySelector('body button[data-stop]');
+console.log(startBtn);
 
 startBtn.addEventListener('click', onClick);
 let colorChange = null;
