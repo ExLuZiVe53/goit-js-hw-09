@@ -1,7 +1,8 @@
-import { convertMs } from '../helpers/convertMs';
 import flatpickr from 'flatpickr';
+import Notiflix from 'notiflix';
 // Додатковий імпорт стилів
 import 'flatpickr/dist/flatpickr.min.css';
+import { convertMs } from '../helpers/convertMs';
 // const flatpickr = require('flatpickr');
 
 // flatpickr(element, {});
@@ -12,11 +13,11 @@ import 'flatpickr/dist/flatpickr.min.css';
 
 const refs = {
   inputBtn: document.querySelector('#datetime-picker'),
-  startBtn: document.querySelector('[data-start]'),
-  day: document.querySelector('[data-days]'),
-  hour: document.querySelector('[data-hours]'),
-  minute: document.querySelector('[data-minutes]'),
-  second: document.querySelector('[data-seconds]'),
+  startBtn: document.querySelector('body button[data-start]'),
+  day: document.querySelector('.value[data-days]'),
+  hour: document.querySelector('.value[data-hours]'),
+  minute: document.querySelector('.value[data-minutes]'),
+  second: document.querySelector('.value[data-seconds]'),
 };
 
 let changeDays = 0;
@@ -28,7 +29,11 @@ const options = {
   minuteIncrement: 1,
 
   onClose(selectedDates) {
-    if (selectedDates[0] > new Date() || selectedDates[0] === new Date()) {
+    if (selectedDates[0] < new Date() || selectedDates[0] === new Date()) {
+      Notiflix.Notify.failure('Please choose a date in the future', {
+        position: 'center-top',
+      });
+
       refs.startBtn.setAttribute('disabled', 'true');
     } else {
       refs.startBtn.removeAttribute('disabled', 'true');
@@ -41,23 +46,48 @@ const options = {
 
 flatpickr(refs.inputBtn, options);
 
-setInterval(() => {
-  const currentDate = new Date();
+refs.startBtn.addEventListener('click', onClick);
 
-  const days = currentDate.getDay();
-  const hours = currentDate.getHours();
-  const minutes = currentDate.getMinutes();
-  const seconds = currentDate.getSeconds();
+function onClick() {
+  const targetDates = changeDays;
 
-  const formatTime = `${days.toString().padStart(2, '0')} : ${hours
-    .toString()
-    .padStart(2, '0')} : ${minutes.toString().padStart(2, '0')} : ${seconds
-    .toString()
-    .padStart(2, '0')}`;
+  setInterval(() => {
+    const currentDate = new Date();
+    const ms = Number(targetDates - currentDate);
+    if (ms > 0) {
+      substitutionOfzero(convertMs(ms)), 1000;
+    } else {
+      refs.inputBtn.removeAttribute('disabled', 'true');
+    }
+  });
 
-  refs.day.textContent = days;
-  refs.hour.textContent = hours;
-  refs.minute.textContent = minutes;
-  refs.second.textContent = seconds;
-  console.log(formatTime);
-}, 1000);
+  function substitutionOfzero(value) {
+    const values = Object.values(value);
+
+    refs.day.textContent = values[0].toString().padStart(2, '0');
+    refs.hour.textContent = values[1].toString().padStart(2, '0');
+    refs.minute.textContent = values[2].toString().padStart(2, '0');
+    refs.second.textContent = values[3].toString().padStart(2, '0');
+  }
+}
+
+// setInterval(() => {
+//   const currentDate = new Date();
+
+//   const days = currentDate.getDay();
+//   const hours = currentDate.getHours();
+//   const minutes = currentDate.getMinutes();
+//   const seconds = currentDate.getSeconds();
+
+//   const formatTime = `${days.toString().padStart(2, '0')} : ${hours
+//     .toString()
+//     .padStart(2, '0')} : ${minutes.toString().padStart(2, '0')} : ${seconds
+//     .toString()
+//     .padStart(2, '0')}`;
+
+//   refs.day.textContent = days;
+//   refs.hour.textContent = hours;
+//   refs.minute.textContent = minutes;
+//   refs.second.textContent = seconds;
+//   console.log(formatTime);
+// }, 1000);
