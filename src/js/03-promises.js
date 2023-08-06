@@ -33,7 +33,7 @@ function onClick(event) {
       }
     );
   } else {
-    for (let i = 0; i < amount.value; i += 1) {
+    for (let i = 1; i <= amount.value; i += 1) {
       createPromise(i, Number(delay.value) + Number(step.value * (i - 1)))
         .then(message => {
           Notiflix.Notify.success(message);
@@ -41,6 +41,7 @@ function onClick(event) {
         .catch(message => {
           Notiflix.Notify.failure(message);
         });
+      // delay.value += step.value;
     }
   }
 }

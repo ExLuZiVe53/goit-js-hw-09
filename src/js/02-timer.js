@@ -5,7 +5,7 @@ import 'flatpickr/dist/flatpickr.min.css';
 import { convertMs } from '../helpers/convertMs';
 
 const refs = {
-  inputBtn: document.querySelector('#datetime-picker'),
+  inputText: document.querySelector('#datetime-picker'),
   startBtn: document.querySelector('body button[data-start]'),
   day: document.querySelector('.value[data-days]'),
   hour: document.querySelector('.value[data-hours]'),
@@ -14,6 +14,7 @@ const refs = {
 };
 
 let changeDays = 0;
+refs.startBtn.setAttribute('disabled', 'true');
 
 const options = {
   enableTime: true,
@@ -31,13 +32,13 @@ const options = {
     } else {
       refs.startBtn.removeAttribute('disabled', 'true');
       refs.startBtn.setAttribute('active', 'true');
-      refs.inputBtn.setAttribute('disabled', 'true');
+      refs.inputText.setAttribute('disabled', 'true');
       changeDays = selectedDates[0];
     }
   },
 };
 
-flatpickr(refs.inputBtn, options);
+flatpickr(refs.inputText, options);
 
 refs.startBtn.addEventListener('click', onClick);
 
@@ -48,9 +49,10 @@ function onClick() {
     const currentDate = new Date();
     const ms = Number(targetDates - currentDate);
     if (ms > 0) {
+      refs.startBtn.setAttribute('disabled', 'true');
       substitutionOfzero(convertMs(ms)), 1000;
     } else {
-      refs.inputBtn.removeAttribute('disabled', 'true');
+      refs.inputText.removeAttribute('disabled', 'true');
     }
   });
 
