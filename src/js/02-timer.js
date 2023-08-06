@@ -6,11 +6,11 @@ import { convertMs } from '../helpers/convertMs';
 
 const refs = {
   inputText: document.querySelector('#datetime-picker'),
-  startBtn: document.querySelector('body button[data-start]'),
-  day: document.querySelector('.value[data-days]'),
-  hour: document.querySelector('.value[data-hours]'),
-  minute: document.querySelector('.value[data-minutes]'),
-  second: document.querySelector('.value[data-seconds]'),
+  startBtn: document.querySelector('[data-start]'),
+  day: document.querySelector('[data-days]'),
+  hour: document.querySelector('[data-hours]'),
+  minute: document.querySelector('[data-minutes]'),
+  second: document.querySelector('[data-seconds]'),
 };
 
 let changeDays = 0;
